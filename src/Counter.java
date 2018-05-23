@@ -14,9 +14,13 @@ public class Counter {
 
 		InputStream inps = new FileInputStream(filename);
 		JsonReader read = new JsonReader(new InputStreamReader(inps, "UTF-8"));
-		
+		read.beginArray();
 	    Gson gson = new GsonBuilder().create();
-	    read.beginArray();
+	    JsonObject obj = gson.fromJson(read, JsonObject.class);
+	    String str = gson.toJson(obj);
+	    System.out.println("begin");
+	    System.out.println(str);
+	    /*
 	    int counter = 0;
 	    while(read.hasNext()) {
 	    	counter +=1;
@@ -28,8 +32,9 @@ public class Counter {
 		    read.beginObject();
 		    
 		    while(read.hasNext()) {
-		    try {	
-		    	System.out.println(read.nextName());
+		    try {
+		    	String x = read.nextName();
+		    	System.out.println(x);
 		    } catch (Exception e) {
 		    		read.skipValue();
 		    	}
@@ -42,6 +47,7 @@ public class Counter {
 	    read.endArray();
 	    read.close();
 	    System.out.println("No more objects left.");
+	    */
 	}
 	
 	
@@ -50,7 +56,7 @@ public class Counter {
 	public static void main(String[] args) {
 		Counter trial = new Counter();
 		try {
-		trial.read("sidewalk.json");
+		trial.read("rawdata/dataout.json");
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}

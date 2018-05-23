@@ -7,7 +7,8 @@
  */
 
 import java.io.*;
-
+import java.util.List;
+import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -17,9 +18,9 @@ import java.util.regex.Pattern;
 // Use "" for the search term.
 public class Finder {
 	//String[] restrict = {"synset"};
-	
-	public Finder(String filename, String query) throws IOException {
-		
+	List<String> answers;
+	public Finder(String filename, List<String> query) throws IOException {
+		answers = query;
 		
 		InputStream inps = new FileInputStream(filename);
 		JsonReader read = new JsonReader(new InputStreamReader(inps, "UTF-8"));
@@ -42,25 +43,41 @@ public class Finder {
 	    String str = gson.toJson(obj);
 	    
 	    //Do checks on string for query and selectively add.
-	    if(str.contains(query)) {
-		    counter2 += 1;
-	    	bw.write(str);
-	    	System.out.println("Image " + counter + " has a match.");
+	    
+	    boolean containsall = true;
+	    for(int i=0;i<answers.size(); i+=1) {
+	    	if(!str.contains(answers.get(i))) {
+	    		containsall = false;
+	    		break;
+	    	}
 	    }
-    	
+	    
+		if(containsall) {
+			counter2 += 1;
+			bw.write(str);
+			System.out.println("Image " + counter + " has a match.");
+		}
 	    while(read.hasNext()) {
-	    	counter+=1;
-		    obj = gson.fromJson(read, JsonObject.class);
+	    	counter +=1;
+	    	obj = gson.fromJson(read, JsonObject.class);
 		    str = gson.toJson(obj);
 		    
-		    //Do checks on string and selectively add.
+		    containsall = true;
+		    for(int i=0;i<answers.size(); i+=1) {
+		    	if(!str.contains(answers.get(i))) {
+		    		containsall = false;
+		    		break;
+		    	}
+		    }
 		    
-		    if(str.contains(query)) {
-			    counter2 += 1;
-			    bw.write(", ");
-		    	bw.write(str);
-		    	System.out.println("Image " + counter + " has a match.");
-		    } 
+			if(containsall) {
+				counter2 += 1;
+				bw.write(",");
+				bw.write(str);
+				System.out.println("Image " + counter + " has a match.");
+			} else {
+				//System.out.println("Image " + counter + " NO MATCH.");
+			}
 		    
 	    	
 	    }
@@ -78,7 +95,9 @@ public class Finder {
 		System.out.println();
 		System.out.println("Starting...");
 		try {
-			new Finder("objects.json", "building");
+			List<String> queries = new ArrayList<String>();
+			queries.add("bicycle");
+			new Finder("vg_merged.json", queries);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
