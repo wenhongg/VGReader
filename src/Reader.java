@@ -1,8 +1,15 @@
-/*
- * Used only on VG Dataset. Place all 6 VG files in the same directory and provide the directory as an argument to main 
- * Reads object by object and writes object by object to avoid heap space error
- * Assumes all VG entries are ordered by image_id (they are)
+/**
+ *  Produced April-May of 2018. 
+ *  
+ *  This query API was created for the Visual Genome database.
+ *  
+ *  
+ *  This is code produced by a self taught programmer who has yet to matriculate in university.
+ *  Therefore if there were things I could have done better or techniques I could have used, please let me know, thank you.
+ *  @author LAM WEN HONG
  */
+
+
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -14,6 +21,11 @@ import java.util.HashMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+/**
+ * Used only on VG Dataset. Place all 6 VG files in the same directory and provide the directory as an argument to main 
+ * Reads object by object and writes object by object to avoid heap space error
+ * Assumes all VG entries are ordered by image_id (they are).
+ */
 public class Reader {
 	
 	public void read(String[] filename, String addressto) throws IOException {

@@ -1,15 +1,27 @@
-/*
- * Returns number of objects and top level JsonObject key names. For testing and debugging use.
+/**
+ *  Produced April-May of 2018. 
+ *  
+ *  This query API was created for the Visual Genome database.
+ *  
+ *  
+ *  This is code produced by a self taught programmer who has yet to matriculate in university.
+ *  Therefore if there were things I could have done better or techniques I could have used, please let me know, thank you.
+ *  @author LAM WEN HONG
  */
 import java.io.*;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
-// 2417997 image?
-// return top level 
-
+/**
+ * This class I used for debugging. Javadocs anyhow.
+ *
+ */
 public class Counter {
-	
+	/**
+	 * Reads the file and returns details
+	 * @param filename filename of the VG data to be checked
+	 * @throws IOException if the file cannot be found
+	 */
 	public void read(String filename) throws IOException {
 
 		InputStream inps = new FileInputStream(filename);
@@ -52,7 +64,10 @@ public class Counter {
 	
 	
 	
-	
+	/**
+	 * Visual
+	 * @param args Genome
+	 */
 	public static void main(String[] args) {
 		Counter trial = new Counter();
 		try {
